@@ -73,6 +73,7 @@ class PogTownGuard {
 
         if (entity.type === "player") {
             const username = entity.username as string;
+            if (username === this.bot.username) return;
             if (this.lastSeenCoolDown.has(username)) return;
             this.lastSeenCoolDown.add(username);
             if (dclient.mcWhitelist.includes(username)) {
@@ -84,7 +85,7 @@ class PogTownGuard {
 
             setTimeout(() => {
                 this.lastSeenCoolDown.delete(username);
-            }, 2000);
+            }, 25 * 60000);
             return;
         }
 

@@ -2,3 +2,7 @@
 .env
 yarn.lock
 /build
+/disc
+/disc/channels.json
+/disc/whitelist.json
+/mc/whitelist.json
