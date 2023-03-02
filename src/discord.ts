@@ -35,6 +35,7 @@ export default class IClient extends Client {
     public Ichannels: Map<string, TextChannel> = new Map();
     public colors = colors;
     public mcWhitelist: string[] = []
+    public allowedIDS = ["703044116019281963", "225722616399265792"]
 
     constructor(options: DiscOptions) {
         super(options);
@@ -48,9 +49,10 @@ export default class IClient extends Client {
 
         this.on("messageCreate", async (message) => {
             const { channelId, content, author, channel } = message;
+            if (!this.allowedIDS.includes(author.id)) return
             const cont = content.split(" ");
 
-            
+
             // Add channel command.
             if (cont[0].startsWith("!channeladd".toLocaleLowerCase())) {
                 const did = await this.addChannel(channel as TextChannel, `${author.username}#${author.discriminator}`);
