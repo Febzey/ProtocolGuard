@@ -20,8 +20,6 @@ type Channels = {
     time: number
 }
 
-type MCWhitelist = string[];
-
 const colors = {
     red: 15548997,
     blue: 3447003,

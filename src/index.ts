@@ -31,7 +31,6 @@ class PogTownGuard {
 
     constructor() {
         this.lastSeenCoolDown = new Set();
-
         this.bot = createBot({
             host: config.host,
             port: config.port,
@@ -41,13 +40,13 @@ class PogTownGuard {
         })
         this.bot.on("entitySpawn", this.entitySpawn.bind(this));
         this.bot.on("spawn", this.onSpawn.bind(this));
-
         this.bot.on("blockUpdate", this.onBlockUpdate.bind(this));
     }
 
     onSpawn(this: this) {
         dclient.chatEmbed("**PogTownGuard has logged in.**", "green")
         this.bot.setControlState("sneak", true);
+        console.log(this.bot.entity.position);
     }
 
     onBlockUpdate(this: this, old: Block | null, newBlock: Block) {
@@ -60,7 +59,6 @@ class PogTownGuard {
             blockCount.count = 0;
         }, 5000);
         this.blockCounts[newBlock.name] = blockCount;
-
         return;
     }
 
