@@ -33,7 +33,7 @@ export default class IClient extends Client {
     public Ichannels: Map<string, TextChannel> = new Map();
     public colors = colors;
     public mcWhitelist: string[] = []
-    public allowedIDS = ["703044116019281963"]
+    public allowedIDS:string[] = []
 
     constructor(options: DiscOptions) {
         super(options);
@@ -112,6 +112,7 @@ export default class IClient extends Client {
 
     private async loadMcWhitelist(): Promise<string[]> {
         const whitelist = (await JSON.parse(await readFile("./mc/whitelist.json", "utf-8"))).whitelist;
+        this.allowedIDS = (await JSON.parse(await readFile("./disc/whitelist.json", "utf-8"))).whitelist;
         return whitelist;
     }
 
@@ -137,6 +138,18 @@ export default class IClient extends Client {
                 })
             } catch (err) {
                 console.log(err, " Sending chat embed error.")
+                return;
+            }
+        }
+    }
+
+    public async RegularMessage(text: string) { 
+        for (const [_, channel] of this.Ichannels) {
+            if (!channel) return;
+            try {
+                await channel.send(text)
+            } catch (err) {
+                console.log(err, " Sending regular message error.")
                 return;
             }
         }
